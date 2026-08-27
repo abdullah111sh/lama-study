@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>لمى 🤍</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #fffafc;
+      color: #5d5360;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 28px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(120, 90, 110, 0.08);
+      border: 1px solid #f3e7ed;
+    }
+
+    .heart {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #8d7180;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: #a4959d;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .study-box {
+      margin-top: 28px;
+      padding: 22px;
+      background: #fff5f8;
+      border-radius: 20px;
+      border: 1px solid #f5e3ea;
+    }
+
+    .study-box h2 {
+      margin-top: 0;
+      color: #806675;
+      font-size: 21px;
+    }
+
+    .check-button {
+      border: none;
+      background: #e8c8d5;
+      color: #604d58;
+      padding: 15px 28px;
+      border-radius: 50px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: bold;
+    }
+
+    .check-button:hover {
+      transform: translateY(-2px);
+      background: #dfbdcb;
+    }
+
+    .check-button:active {
+      transform: scale(0.97);
+    }
+
+    #message {
+      margin-top: 20px;
+      min-height: 55px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #806675;
+    }
+
+    .streak {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 18px;
+      background: #faf4f7;
+      font-size: 17px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: #b09da6;
+      font-size: 14px;
+    }
+
+    .small-heart {
+      color: #d99caf;
+    }
+
+    .reset {
+      margin-top: 15px;
+      border: none;
+      background: transparent;
+      color: #b39da7;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .reset:hover {
+      color: #8d7180;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="heart">♡</div>
+
+    <h1>لمى 🤍</h1>
+
+    <p class="subtitle">
+      مكان صغير عشان تذكّرين نفسك كل يوم<br>
+      إنك قاعدة تتقدمين خطوة خطوة 🌷
+    </p>
+
+    <div class="study-box">
+
+      <h2>هل ذاكرتِ قدرات اليوم؟ 📚</h2>
+
+      <button class="check-button" onclick="finishedStudy()">
+        ✓ ذاكرت اليوم
+      </button>
+
+      <div id="message"></div>
+
+    </div>
+
+    <div class="streak">
+      🔖 عدد الأيام اللي ذاكرتِ فيها:
+      <strong id="days">0</strong>
+    </div>
+
+    <div class="footer">
+      صنع بحب من عبدالله إلى لمى
+      <span class="small-heart">♡</span> 🍼
+    </div>
+
+    <button class="reset" onclick="resetProgress()">
+      تصفير العداد
+    </button>
+
+  </div>
+
+
+  <script>
+
+    let days = Number(localStorage.getItem("lamaStudyDays")) || 0;
+    let lastStudyDate = localStorage.getItem("lamaLastStudyDate");
+
+    document.getElementById("days").textContent = days;
+
+    function getToday() {
+      const now = new Date();
+
+      return now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
+    }
+
+    function finishedStudy() {
+
+      const today = getToday();
+
+      if (lastStudyDate === today) {
+
+        document.getElementById("message").innerHTML =
+          "أنتِ حسبتي مذاكرة اليوم خلاص 🤍<br>" +
+          "باقي بس تستمرين على نفس الحماس 🌷";
+
+        return;
+      }
+
+      days++;
+
+      lastStudyDate = today;
+
+      localStorage.setItem("lamaStudyDays", days);
+      localStorage.setItem("lamaLastStudyDate", today);
+
+      document.getElementById("days").textContent = days;
+
+      const messages = [
+        "أحسنتِ يا لمى 🤍 خطوة صغيرة اليوم، وبتصيرين أقرب لهدفك.",
+        "فخورة فيكِ 🌷 لا تستهينين بأي يوم تذاكرين فيه.",
+        "كذا يا لمى! 📚🤍 استمري، تعبك اليوم بيصنع فرق بكرة.",
+        "برافو عليكِ ♡ يوم جديد أنجزتيه!",
+        "قدها لمى 🫶🏻 خطوة خطوة لين توصلين.",
+        "أهم شيء الاستمرار، وأنتِ قاعدة تسوينها 🤍",
+        "ذاكرتِ؟ خلاص تستاهلين تفخرين بنفسك اليوم 🌸"
+      ];
+
+      const randomMessage =
+        messages[Math.floor(Math.random() * messages.length)];
+
+      document.getElementById("message").innerHTML =
+        randomMessage;
+    }
+
+
+    function resetProgress() {
+
+      const confirmReset =
+        confirm("متأكدة تبين تصفرين العداد؟");
+
+      if (confirmReset) {
+
+        days = 0;
+        lastStudyDate = null;
+
+        localStorage.removeItem("lamaStudyDays");
+        localStorage.removeItem("lamaLastStudyDate");
+
+        document.getElementById("days").textContent = 0;
+
+        document.getElementById("message").innerHTML =
+          "تم تصفير العداد 🤍";
+      }
+    }
+
+  </script>
+
+</body>
+</html>
