@@ -1,477 +1,670 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101810">
-  <title>لمى | رحلة القدرات</title>
+
+  <title>لمى 🤍</title>
+
   <style>
-    :root {
-      --bg: #101810;
-      --panel: #182219;
-      --panel-2: #202d20;
-      --line: #3c513b;
-      --text: #f5f7f1;
-      --muted: #b9c4b5;
-      --green: #9bea38;
-      --green-dark: #497b20;
-      --gold: #ffc857;
-      --shadow: rgba(0, 0, 0, .35);
+    * {
+      box-sizing: border-box;
     }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       min-height: 100vh;
-      color: var(--text);
-      font-family: Tahoma, Arial, sans-serif;
-      background:
-        linear-gradient(rgba(10, 16, 10, .82), rgba(10, 16, 10, .94)),
-        repeating-linear-gradient(135deg, #263b25 0 18px, #2e472c 18px 36px);
+      font-family: Arial, sans-serif;
+      background: #fffafc;
+      color: #5d5360;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
-
-    button, input { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
 
     .container {
-      width: min(100% - 28px, 680px);
-      margin: auto;
-      padding: 28px 0 44px;
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 28px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(120, 90, 110, 0.08);
+      border: 1px solid #f3e7ed;
     }
 
-    header { text-align: center; margin-bottom: 24px; }
-
-    .logo {
-      display: grid;
-      place-items: center;
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 12px;
-      border: 3px solid var(--line);
-      border-radius: 18px;
+    .heart {
       font-size: 42px;
-      background: linear-gradient(145deg, #344d2d, #182719);
-      box-shadow: 0 8px 0 #0a0e0a, 0 14px 25px var(--shadow);
+      margin-bottom: 10px;
     }
-
-    h1, h2, p { margin-top: 0; }
 
     h1 {
-      margin-bottom: 8px;
-      color: var(--green);
-      font-size: clamp(27px, 7vw, 38px);
-      line-height: 1.2;
-      text-shadow: 3px 3px #0a0e0a;
+      margin: 0;
+      color: #8d7180;
+      font-size: 32px;
     }
 
-    .subtitle { margin-bottom: 0; color: var(--muted); line-height: 1.7; }
-
-    .card {
-      margin-bottom: 18px;
-      padding: clamp(18px, 4vw, 24px);
-      border: 2px solid var(--line);
-      border-radius: 16px;
-      background: rgba(24, 34, 25, .96);
-      box-shadow: 0 7px 0 #0b100b, 0 14px 28px var(--shadow);
+    .subtitle {
+      margin-top: 10px;
+      color: #a4959d;
+      font-size: 16px;
+      line-height: 1.8;
     }
 
-    .card h2 {
-      margin-bottom: 12px;
-      color: var(--green);
+    .study-box {
+      margin-top: 28px;
+      padding: 22px;
+      background: #fff5f8;
+      border-radius: 20px;
+      border: 1px solid #f5e3ea;
+    }
+
+    .study-box h2 {
+      margin-top: 0;
+      color: #806675;
       font-size: 21px;
-      line-height: 1.45;
     }
 
-    .study-status { text-align: center; }
-    .today { margin-bottom: 18px; color: var(--muted); }
-
-    .check-btn {
-      width: 100%;
-      padding: 16px 18px;
-      border: 0;
-      border-radius: 10px;
-      color: #10200d;
-      font-weight: 800;
+    .check-button {
+      border: none;
+      background: #e8c8d5;
+      color: #604d58;
+      padding: 15px 28px;
+      border-radius: 50px;
+      font-size: 18px;
       cursor: pointer;
-      background: var(--green);
-      box-shadow: 0 5px 0 var(--green-dark);
-      transition: transform .15s, filter .15s, box-shadow .15s;
+      transition: 0.2s;
+      font-weight: bold;
     }
 
-    .check-btn:hover { filter: brightness(1.08); }
-    .check-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--green-dark); }
-    .check-btn:focus-visible, .new-meme:focus-visible, .reset button:focus-visible {
-      outline: 3px solid var(--gold);
-      outline-offset: 3px;
+    .check-button:hover {
+      transform: translateY(-2px);
+      background: #dfbdcb;
     }
 
-    .check-btn.done {
-      color: #e7eee3;
-      background: #526052;
-      box-shadow: 0 5px 0 #303a30;
-      cursor: default;
+    .check-button:active {
+      transform: scale(0.97);
     }
 
     #message {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      border: 2px dashed var(--green);
-      border-radius: 10px;
-      color: #eef9e9;
+      margin-top: 20px;
+      min-height: 55px;
+      font-size: 18px;
       line-height: 1.8;
-      background: #202c20;
+      color: #806675;
     }
 
     .streak {
-      margin: 20px 0 0;
-      font-size: 25px;
-      font-weight: 700;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 18px;
+      background: #faf4f7;
+      font-size: 17px;
     }
 
-    .streak span { color: var(--gold); }
-
-    .section-note { color: var(--muted); line-height: 1.7; }
-
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 9px;
-      margin-top: 17px;
+    .footer {
+      margin-top: 28px;
+      color: #b09da6;
+      font-size: 14px;
     }
 
-    .time-box {
-      min-width: 0;
-      padding: 13px 5px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      text-align: center;
-      background: #111a12;
+    .small-heart {
+      color: #d99caf;
     }
 
-    .time-box .number {
-      overflow: hidden;
-      color: var(--green);
-      font-size: clamp(21px, 6vw, 29px);
-      font-weight: 800;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .time-box .label { margin-top: 5px; color: var(--muted); font-size: 12px; }
-
-    .progress-wrap {
-      margin: 18px 0 4px;
-      color: var(--muted);
+    .reset {
+      margin-top: 15px;
+      border: none;
+      background: transparent;
+      color: #b39da7;
+      cursor: pointer;
       font-size: 13px;
     }
 
-    .progress-track {
-      height: 10px;
-      margin-top: 8px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: #0d140e;
+    .reset:hover {
+      color: #8d7180;
     }
 
-    .progress-bar {
-      width: 0;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--green-dark), var(--green));
-      transition: width .25s ease;
+
+    /* =========================
+       الإضافة الأولى: النجوم ✨
+       ========================= */
+
+    .star {
+      position: fixed;
+      top: -50px;
+      z-index: 9999;
+      pointer-events: none;
+      animation: starFall linear forwards;
     }
 
-    .task {
+    @keyframes starFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) scale(0.4);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(115vh) rotate(720deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+
+    /* =========================
+       الإضافة الثانية: المهام 📝
+       ========================= */
+
+    .tasks-box {
+      margin-top: 20px;
+      padding: 22px;
+      background: #fff8fa;
+      border-radius: 20px;
+      border: 1px solid #f5e3ea;
+    }
+
+    .tasks-box h2 {
+      margin-top: 0;
+      color: #806675;
+      font-size: 21px;
+    }
+
+    .task-input-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .task-input {
+      flex: 1;
+      border: 1px solid #ead9e0;
+      background: white;
+      padding: 13px 15px;
+      border-radius: 15px;
+      outline: none;
+      font-size: 15px;
+      color: #604d58;
+    }
+
+    .task-input:focus {
+      border-color: #d8b4c3;
+    }
+
+    .task-input::placeholder {
+      color: #b8a5ae;
+    }
+
+    .add-task-button {
+      border: none;
+      background: #e8c8d5;
+      color: #604d58;
+      border-radius: 15px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .add-task-button:hover {
+      background: #dfbdcb;
+    }
+
+    .tasks-list {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .task-item {
+      background: white;
+      border: 1px solid #f0e3e8;
+      border-radius: 15px;
+      padding: 11px 12px;
       display: flex;
       align-items: center;
-      gap: 11px;
-      min-height: 50px;
-      margin: 9px 0;
-      padding: 12px 13px;
-      border: 1px solid transparent;
-      border-radius: 10px;
+      gap: 10px;
+      text-align: right;
+    }
+
+    .task-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #d6aabc;
       cursor: pointer;
-      background: var(--panel-2);
-      transition: background .2s, border-color .2s, opacity .2s;
     }
 
-    .task:hover { border-color: var(--line); background: #293929; }
-    .task input { width: 20px; height: 20px; accent-color: var(--green); cursor: pointer; }
-    .task.completed { color: var(--muted); text-decoration: line-through; opacity: .58; }
-
-    .meme { text-align: center; }
-
-    .meme-image {
-      display: grid;
-      place-items: center;
-      min-height: 170px;
-      margin-bottom: 15px;
-      border: 2px solid var(--line);
-      border-radius: 12px;
-      font-size: clamp(54px, 14vw, 78px);
-      background:
-        linear-gradient(135deg, rgba(143, 212, 60, .16), transparent),
-        #253b22;
+    .task-text {
+      flex: 1;
+      color: #6d5963;
+      font-size: 15px;
+      line-height: 1.5;
     }
 
-    .meme-text {
-      min-height: 58px;
-      color: #eef4e9;
-      font-size: 18px;
-      line-height: 1.8;
-      white-space: pre-line;
+    .task-item.done .task-text {
+      text-decoration: line-through;
+      opacity: 0.5;
     }
 
-    .new-meme {
-      margin-top: 8px;
-      padding: 11px 18px;
-      border: 1px solid #647360;
-      border-radius: 9px;
-      color: var(--text);
-      cursor: pointer;
-      background: #334333;
-    }
-
-    .new-meme:hover { background: #405440; }
-
-    .reset { margin: 24px 0 0; text-align: center; }
-
-    .reset button {
-      padding: 8px 13px;
-      border: 1px solid #687568;
-      border-radius: 7px;
-      color: var(--muted);
-      cursor: pointer;
+    .delete-task {
+      border: none;
       background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      opacity: 0.55;
     }
 
-    .reset button:hover { color: var(--text); border-color: var(--green); }
-
-    footer { margin-top: 26px; color: #93a08f; font-size: 12px; text-align: center; }
-
-    @media (max-width: 460px) {
-      .container { width: min(100% - 20px, 680px); padding-top: 20px; }
-      .countdown { grid-template-columns: repeat(2, 1fr); }
-      .card { border-radius: 13px; }
+    .delete-task:hover {
+      opacity: 1;
     }
+
   </style>
 </head>
+
 <body>
-  <main class="container">
-    <header>
-      <div class="logo" aria-hidden="true">⛏️</div>
-      <h1>رحلة لمى في القدرات</h1>
-      <p class="subtitle">كل يوم بلوكة جديدة في طريقك للهدف 🧱</p>
-    </header>
 
-    <section class="card study-status" aria-labelledby="study-title">
-      <h2 id="study-title">📚 مذاكرة اليوم</h2>
-      <p class="today" id="todayText"></p>
-      <button id="studyButton" class="check-btn" type="button">✅ خلصت مذاكرة اليوم</button>
-      <div id="message" role="status" aria-live="polite"></div>
-      <div class="streak">🔥 الستريك: <span id="streak">0</span> يوم</div>
-    </section>
+  <div class="container">
 
-    <section class="card" aria-labelledby="countdown-title">
-      <h2 id="countdown-title">🎓 العد التنازلي للسنة الدراسية القادمة</h2>
-      <p class="section-note">باقي على بداية السنة الدراسية:</p>
-      <div class="countdown" aria-label="الوقت المتبقي">
-        <div class="time-box"><div class="number" id="days">0</div><div class="label">يوم</div></div>
-        <div class="time-box"><div class="number" id="hours">0</div><div class="label">ساعة</div></div>
-        <div class="time-box"><div class="number" id="minutes">0</div><div class="label">دقيقة</div></div>
-        <div class="time-box"><div class="number" id="seconds">0</div><div class="label">ثانية</div></div>
+    <div class="heart">♡</div>
+
+    <h1>لمى 🤍</h1>
+
+    <p class="subtitle">
+      مكان صغير عشان تذكّرين نفسك كل يوم<br>
+      إنك قاعدة تتقدمين خطوة خطوة 🌷
+    </p>
+
+    <div class="study-box">
+
+      <h2>هل ذاكرتِ قدرات اليوم؟ 📚</h2>
+
+      <button class="check-button" onclick="finishedStudy()">
+        ✓ ذاكرت اليوم
+      </button>
+
+      <div id="message"></div>
+
+    </div>
+
+    <div class="streak">
+      🔖 عدد الأيام اللي ذاكرتِ فيها:
+      <strong id="days">0</strong>
+    </div>
+
+
+    <!-- =========================
+         الإضافة: خانة المهام 📝
+         ========================= -->
+
+    <div class="tasks-box">
+
+      <h2>مهامك اليوم يا لمى 📝🤍</h2>
+
+      <div class="task-input-area">
+
+        <input
+          id="taskInput"
+          class="task-input"
+          type="text"
+          placeholder="اكتبي مهامك هُنا يا ملكة 👑"
+        >
+
+        <button
+          class="add-task-button"
+          onclick="addTask()"
+        >
+          +
+        </button>
+
       </div>
-    </section>
 
-    <section class="card" aria-labelledby="tasks-title">
-      <h2 id="tasks-title">🌱 وش تسوين بعد المذاكرة؟</h2>
-      <p class="section-note">اختاري الأشياء اللي تبين تسوينها اليوم:</p>
-      <div id="tasks">
-        <label class="task"><input type="checkbox" data-task="walk">🚶‍♀️ طلعة أو تمشية بسيطة</label>
-        <label class="task"><input type="checkbox" data-task="minecraft">🎮 لعب ماينكرافت</label>
-        <label class="task"><input type="checkbox" data-task="rest">☕ وقت راحة بدون دراسة</label>
-        <label class="task"><input type="checkbox" data-task="music">🎧 اسمعي أغانيك المفضلة</label>
-        <label class="task"><input type="checkbox" data-task="room">🧹 رتبي غرفتك 10 دقائق</label>
-        <label class="task"><input type="checkbox" data-task="watch">📺 شوفي شيء تحبينه</label>
-      </div>
-      <div class="progress-wrap">
-        <span id="progressText">0 من 6 مكتملة</span>
-        <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
-      </div>
-    </section>
+      <div
+        id="tasksList"
+        class="tasks-list"
+      ></div>
 
-    <section class="card meme" aria-labelledby="meme-title">
-      <h2 id="meme-title">⛏️ Minecraft Meme</h2>
-      <div class="meme-image" id="memeEmoji" aria-hidden="true">🧱⛏️</div>
-      <div class="meme-text" id="memeText">لما تقولين بذاكر ساعة...
-وبعد خمس دقايق تعدين كم بلوكة عندك 😂</div>
-      <button class="new-meme" id="memeButton" type="button">😂 ميم ثاني</button>
-    </section>
+    </div>
 
-    <div class="reset"><button id="resetButton" type="button">إعادة ضبط إنجاز اليوم</button></div>
-    <footer>صُنع بحب من عبدالله إلى لمى 🍼💚 | One block at a time 🧱</footer>
-  </main>
+
+    <div class="footer">
+      صنع بحب من عبدالله إلى لمى
+      <span class="small-heart">♡</span> 🍼
+    </div>
+
+    <button class="reset" onclick="resetProgress()">
+      تصفير العداد
+    </button>
+
+  </div>
+
 
   <script>
-    // غيّري التاريخ هنا إذا عرفتي موعد الجامعة.
-    const SCHOOL_START = "2027-09-01T08:00:00+03:00";
-    const STORAGE_KEY = "lamaJourney";
 
-    const messages = [
-      "يا لمى! 🔥 خلصتي مذاكرة اليوم، كفو عليكِ! خطوة صغيرة اليوم = فرق كبير بعدين 💚",
-      "تم بناء بلوكة جديدة في طريقك للهدف 🧱⛏️ لا توقفين!",
-      "لمى دخلت المود الوحشي اليوم 😎🔥 القدرات ما يدري وش جاه!",
-      "كفو! اليوم ما راح يروح بدون إنجاز. فخورة فيكِ 💚",
-      "خلصتي؟ أجل اقفلي الكتب وروحي استمتعي شوي 😂 تستاهلين!",
-      "كل يوم تذاكرين فيه أنتِ أقرب للدرجة اللي تبينها 🎯",
-      "Achievement Unlocked 🏆: مذاكرة اليوم تمت بنجاح!",
-      "حتى الـ Creeper ما يقدر يفجر الستريك حقك 💥😂"
-    ];
+    let days = Number(localStorage.getItem("lamaStudyDays")) || 0;
+    let lastStudyDate = localStorage.getItem("lamaLastStudyDate");
 
-    const memes = [
-      ["🧟‍♂️⛏️", "لمى: بذاكر قدرات ساعتين.\nأيضًا لمى بعد 10 دقائق: خلني أحفر شوي 😂"],
-      ["💎😎", "لما تحلين سؤال صعب من أول محاولة: أنا الآن عندي دايموند 😂💎"],
-      ["🧱📚", "كل سؤال تحلينه = بلوكة جديدة في بناء مستقبلك."],
-      ["💥🟩", "السؤال: سهل جدًا.\nلمى: أكيد فيه Creeper مخبي وراه."],
-      ["🏠⛏️", "بعد المذاكرة: ألعب شوي.\nبعد 5 ساعات: بنيت قرية كاملة."],
-      ["🐷💎", "القدرات: سؤال جديد.\nلمى: أعطني الـ Diamond Sword."]
-    ];
-
-    const $ = (id) => document.getElementById(id);
+    document.getElementById("days").textContent = days;
 
     function getToday() {
       const now = new Date();
-      return [
-        now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0")
-      ].join("-");
+
+      return now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
     }
 
-    function getState() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch {
-        return {};
-      }
-    }
+    function finishedStudy() {
 
-    function saveState(state) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function showDate() {
-      $("todayText").textContent = new Date().toLocaleDateString("ar-SA", {
-        weekday: "long", year: "numeric", month: "long", day: "numeric"
-      });
-    }
-
-    function setStudyDone(messageText) {
-      $("studyButton").textContent = "🎉 تم إنجاز مذاكرة اليوم";
-      $("studyButton").classList.add("done");
-      $("studyButton").disabled = true;
-      $("message").innerHTML = messageText;
-      $("message").style.display = "block";
-    }
-
-    function finishStudy() {
-      const state = getState();
       const today = getToday();
-      if (state.lastStudy === today) return;
 
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayText = [
-        yesterday.getFullYear(),
-        String(yesterday.getMonth() + 1).padStart(2, "0"),
-        String(yesterday.getDate()).padStart(2, "0")
-      ].join("-");
+      if (lastStudyDate === today) {
 
-      state.streak = state.previousDate === yesterdayText ? (state.streak || 0) + 1 : 1;
-      state.lastStudy = today;
-      state.previousDate = today;
-      saveState(state);
+        document.getElementById("message").innerHTML =
+          "أنتِ حسبتي مذاكرة اليوم خلاص 🤍<br>" +
+          "باقي بس تستمرين على نفس الحماس 🌷";
 
-      $("streak").textContent = state.streak;
-      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-      setStudyDone("🎉 <strong>تم تسجيل مذاكرة اليوم!</strong><br><br>" + randomMessage);
-    }
-
-    function loadStudyStatus() {
-      const state = getState();
-      $("streak").textContent = state.streak || 0;
-      if (state.lastStudy === getToday()) {
-        setStudyDone("💚 كفو يا لمى! أنتِ مخلصة مذاكرة اليوم، الحين وقت الاستراحة والاستمتاع 😎");
-      }
-    }
-
-    function updateTasks() {
-      const state = getState();
-      const tasks = state.tasks || {};
-      const checkboxes = document.querySelectorAll("[data-task]");
-      let completed = 0;
-
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = Boolean(tasks[checkbox.dataset.task]);
-        checkbox.parentElement.classList.toggle("completed", checkbox.checked);
-        if (checkbox.checked) completed++;
-      });
-
-      $("progressText").textContent = `${completed} من ${checkboxes.length} مكتملة`;
-      $("progressBar").style.width = `${(completed / checkboxes.length) * 100}%`;
-    }
-
-    function taskDone(checkbox) {
-      const state = getState();
-      state.tasks = state.tasks || {};
-      state.tasks[checkbox.dataset.task] = checkbox.checked;
-      saveState(state);
-      updateTasks();
-    }
-
-    function updateCountdown() {
-      const difference = new Date(SCHOOL_START).getTime() - Date.now();
-      if (difference <= 0) {
-        ["days", "hours", "minutes", "seconds"].forEach((id, index) => {
-          $(id).textContent = ["🎓", "بدأت", "🔥", "💚"][index];
-        });
         return;
       }
 
-      $("days").textContent = Math.floor(difference / 86400000);
-      $("hours").textContent = Math.floor(difference / 3600000) % 24;
-      $("minutes").textContent = Math.floor(difference / 60000) % 60;
-      $("seconds").textContent = Math.floor(difference / 1000) % 60;
+      days++;
+
+      lastStudyDate = today;
+
+      localStorage.setItem("lamaStudyDays", days);
+      localStorage.setItem("lamaLastStudyDate", today);
+
+      document.getElementById("days").textContent = days;
+
+      const messages = [
+        "أحسنتِ يا لمى 🤍 خطوة صغيرة اليوم، وبتصيرين أقرب لهدفك.",
+        "فخورة فيكِ 🌷 لا تستهينين بأي يوم تذاكرين فيه.",
+        "كذا يا لمى! 📚🤍 استمري، تعبك اليوم بيصنع فرق بكرة.",
+        "برافو عليكِ ♡ يوم جديد أنجزتيه!",
+        "قدها لمى 🫶🏻 خطوة خطوة لين توصلين.",
+        "أهم شيء الاستمرار، وأنتِ قاعدة تسوينها 🤍",
+        "ذاكرتِ؟ خلاص تستاهلين تفخرين بنفسك اليوم 🌸"
+      ];
+
+      const randomMessage =
+        messages[Math.floor(Math.random() * messages.length)];
+
+      document.getElementById("message").innerHTML =
+        randomMessage;
     }
 
-    function newMeme() {
-      const [emoji, text] = memes[Math.floor(Math.random() * memes.length)];
-      $("memeEmoji").textContent = emoji;
-      $("memeText").textContent = text;
+
+    function resetProgress() {
+
+      const confirmReset =
+        confirm("متأكدة تبين تصفرين العداد؟");
+
+      if (confirmReset) {
+
+        days = 0;
+        lastStudyDate = null;
+
+        localStorage.removeItem("lamaStudyDays");
+        localStorage.removeItem("lamaLastStudyDate");
+
+        document.getElementById("days").textContent = 0;
+
+        document.getElementById("message").innerHTML =
+          "تم تصفير العداد 🤍";
+      }
     }
 
-    function resetToday() {
-      if (!confirm("متأكدة تبين تمسحين إنجاز اليوم والمهام؟ 😭")) return;
-      localStorage.removeItem(STORAGE_KEY);
-      location.reload();
-    }
-
-    $("studyButton").addEventListener("click", finishStudy);
-    $("memeButton").addEventListener("click", newMeme);
-    $("resetButton").addEventListener("click", resetToday);
-    document.querySelectorAll("[data-task]").forEach((checkbox) => {
-      checkbox.addEventListener("change", () => taskDone(checkbox));
-    });
-
-    showDate();
-    loadStudyStatus();
-    updateTasks();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
   </script>
+
+
+  <!-- =====================================
+       إضافات جديدة فقط - النجوم والمهام
+       ===================================== -->
+
+  <script>
+
+    /* النجوم */
+
+    let studyDateBeforeClick = null;
+
+    const studyButton =
+      document.querySelector(".check-button");
+
+
+    studyButton.addEventListener(
+      "click",
+      function () {
+
+        studyDateBeforeClick =
+          localStorage.getItem("lamaLastStudyDate");
+
+      },
+      true
+    );
+
+
+    studyButton.addEventListener(
+      "click",
+      function () {
+
+        const studyDateAfterClick =
+          localStorage.getItem("lamaLastStudyDate");
+
+        /*
+          نشغّل النجوم فقط إذا انحسب
+          يوم جديد فعلاً
+        */
+
+        if (
+          studyDateBeforeClick !== studyDateAfterClick &&
+          studyDateAfterClick === getToday()
+        ) {
+
+          createStars();
+
+        }
+
+      }
+    );
+
+
+    function createStars() {
+
+      const stars =
+        ["✨", "⭐", "🌟", "✦", "✧", "💫"];
+
+      for (let i = 0; i < 100; i++) {
+
+        const star =
+          document.createElement("div");
+
+        star.className = "star";
+
+        star.textContent =
+          stars[
+            Math.floor(
+              Math.random() * stars.length
+            )
+          ];
+
+        star.style.left =
+          Math.random() * 100 + "vw";
+
+        star.style.fontSize =
+          15 + Math.random() * 30 + "px";
+
+        star.style.animationDuration =
+          2 + Math.random() * 3 + "s";
+
+        star.style.animationDelay =
+          Math.random() * 0.8 + "s";
+
+        document.body.appendChild(star);
+
+
+        setTimeout(
+          function () {
+            star.remove();
+          },
+          6000
+        );
+
+      }
+
+    }
+
+
+
+    /* =========================
+       المهام
+       ========================= */
+
+    let tasks =
+      JSON.parse(
+        localStorage.getItem("lamaTasks")
+      ) || [];
+
+
+    function saveTasks() {
+
+      localStorage.setItem(
+        "lamaTasks",
+        JSON.stringify(tasks)
+      );
+
+    }
+
+
+    function renderTasks() {
+
+      const tasksList =
+        document.getElementById("tasksList");
+
+      tasksList.innerHTML = "";
+
+
+      tasks.forEach(
+        function (task, index) {
+
+          const item =
+            document.createElement("div");
+
+          item.className =
+            "task-item" +
+            (task.done ? " done" : "");
+
+
+          const checkbox =
+            document.createElement("input");
+
+          checkbox.type = "checkbox";
+          checkbox.checked = task.done;
+
+          checkbox.addEventListener(
+            "change",
+            function () {
+
+              tasks[index].done =
+                checkbox.checked;
+
+              saveTasks();
+              renderTasks();
+
+            }
+          );
+
+
+          const text =
+            document.createElement("div");
+
+          text.className = "task-text";
+          text.textContent = task.text;
+
+
+          const deleteButton =
+            document.createElement("button");
+
+          deleteButton.className =
+            "delete-task";
+
+          deleteButton.textContent = "✕";
+
+          deleteButton.onclick =
+            function () {
+
+              tasks.splice(index, 1);
+
+              saveTasks();
+              renderTasks();
+
+            };
+
+
+          item.appendChild(checkbox);
+          item.appendChild(text);
+          item.appendChild(deleteButton);
+
+          tasksList.appendChild(item);
+
+        }
+      );
+
+    }
+
+
+    function addTask() {
+
+      const input =
+        document.getElementById("taskInput");
+
+      const taskText =
+        input.value.trim();
+
+
+      if (taskText === "") {
+        return;
+      }
+
+
+      tasks.push({
+        text: taskText,
+        done: false
+      });
+
+
+      saveTasks();
+      renderTasks();
+
+      input.value = "";
+
+      input.focus();
+
+    }
+
+
+    document
+      .getElementById("taskInput")
+      .addEventListener(
+        "keydown",
+        function (event) {
+
+          if (event.key === "Enter") {
+
+            addTask();
+
+          }
+
+        }
+      );
+
+
+    renderTasks();
+
+  </script>
+
 </body>
 </html>
