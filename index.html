@@ -125,6 +125,144 @@
     .reset:hover {
       color: #8d7180;
     }
+
+
+    /* =========================
+       الإضافة الأولى: النجوم ✨
+       ========================= */
+
+    .star {
+      position: fixed;
+      top: -50px;
+      z-index: 9999;
+      pointer-events: none;
+      animation: starFall linear forwards;
+    }
+
+    @keyframes starFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) scale(0.4);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(115vh) rotate(720deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+
+    /* =========================
+       الإضافة الثانية: المهام 📝
+       ========================= */
+
+    .tasks-box {
+      margin-top: 20px;
+      padding: 22px;
+      background: #fff8fa;
+      border-radius: 20px;
+      border: 1px solid #f5e3ea;
+    }
+
+    .tasks-box h2 {
+      margin-top: 0;
+      color: #806675;
+      font-size: 21px;
+    }
+
+    .task-input-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .task-input {
+      flex: 1;
+      border: 1px solid #ead9e0;
+      background: white;
+      padding: 13px 15px;
+      border-radius: 15px;
+      outline: none;
+      font-size: 15px;
+      color: #604d58;
+    }
+
+    .task-input:focus {
+      border-color: #d8b4c3;
+    }
+
+    .task-input::placeholder {
+      color: #b8a5ae;
+    }
+
+    .add-task-button {
+      border: none;
+      background: #e8c8d5;
+      color: #604d58;
+      border-radius: 15px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .add-task-button:hover {
+      background: #dfbdcb;
+    }
+
+    .tasks-list {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .task-item {
+      background: white;
+      border: 1px solid #f0e3e8;
+      border-radius: 15px;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: right;
+    }
+
+    .task-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #d6aabc;
+      cursor: pointer;
+    }
+
+    .task-text {
+      flex: 1;
+      color: #6d5963;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .task-item.done .task-text {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .delete-task {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      opacity: 0.55;
+    }
+
+    .delete-task:hover {
+      opacity: 1;
+    }
+
   </style>
 </head>
 
@@ -157,6 +295,41 @@
       🔖 عدد الأيام اللي ذاكرتِ فيها:
       <strong id="days">0</strong>
     </div>
+
+
+    <!-- =========================
+         الإضافة: خانة المهام 📝
+         ========================= -->
+
+    <div class="tasks-box">
+
+      <h2>مهامك اليوم يا لمى 📝🤍</h2>
+
+      <div class="task-input-area">
+
+        <input
+          id="taskInput"
+          class="task-input"
+          type="text"
+          placeholder="اكتبي مهامك هُنا يا ملكة 👑"
+        >
+
+        <button
+          class="add-task-button"
+          onclick="addTask()"
+        >
+          +
+        </button>
+
+      </div>
+
+      <div
+        id="tasksList"
+        class="tasks-list"
+      ></div>
+
+    </div>
+
 
     <div class="footer">
       صنع بحب من عبدالله إلى لمى
@@ -244,6 +417,252 @@
           "تم تصفير العداد 🤍";
       }
     }
+
+  </script>
+
+
+  <!-- =====================================
+       إضافات جديدة فقط - النجوم والمهام
+       ===================================== -->
+
+  <script>
+
+    /* النجوم */
+
+    let studyDateBeforeClick = null;
+
+    const studyButton =
+      document.querySelector(".check-button");
+
+
+    studyButton.addEventListener(
+      "click",
+      function () {
+
+        studyDateBeforeClick =
+          localStorage.getItem("lamaLastStudyDate");
+
+      },
+      true
+    );
+
+
+    studyButton.addEventListener(
+      "click",
+      function () {
+
+        const studyDateAfterClick =
+          localStorage.getItem("lamaLastStudyDate");
+
+        /*
+          نشغّل النجوم فقط إذا انحسب
+          يوم جديد فعلاً
+        */
+
+        if (
+          studyDateBeforeClick !== studyDateAfterClick &&
+          studyDateAfterClick === getToday()
+        ) {
+
+          createStars();
+
+        }
+
+      }
+    );
+
+
+    function createStars() {
+
+      const stars =
+        ["✨", "⭐", "🌟", "✦", "✧", "💫"];
+
+      for (let i = 0; i < 100; i++) {
+
+        const star =
+          document.createElement("div");
+
+        star.className = "star";
+
+        star.textContent =
+          stars[
+            Math.floor(
+              Math.random() * stars.length
+            )
+          ];
+
+        star.style.left =
+          Math.random() * 100 + "vw";
+
+        star.style.fontSize =
+          15 + Math.random() * 30 + "px";
+
+        star.style.animationDuration =
+          2 + Math.random() * 3 + "s";
+
+        star.style.animationDelay =
+          Math.random() * 0.8 + "s";
+
+        document.body.appendChild(star);
+
+
+        setTimeout(
+          function () {
+            star.remove();
+          },
+          6000
+        );
+
+      }
+
+    }
+
+
+
+    /* =========================
+       المهام
+       ========================= */
+
+    let tasks =
+      JSON.parse(
+        localStorage.getItem("lamaTasks")
+      ) || [];
+
+
+    function saveTasks() {
+
+      localStorage.setItem(
+        "lamaTasks",
+        JSON.stringify(tasks)
+      );
+
+    }
+
+
+    function renderTasks() {
+
+      const tasksList =
+        document.getElementById("tasksList");
+
+      tasksList.innerHTML = "";
+
+
+      tasks.forEach(
+        function (task, index) {
+
+          const item =
+            document.createElement("div");
+
+          item.className =
+            "task-item" +
+            (task.done ? " done" : "");
+
+
+          const checkbox =
+            document.createElement("input");
+
+          checkbox.type = "checkbox";
+          checkbox.checked = task.done;
+
+          checkbox.addEventListener(
+            "change",
+            function () {
+
+              tasks[index].done =
+                checkbox.checked;
+
+              saveTasks();
+              renderTasks();
+
+            }
+          );
+
+
+          const text =
+            document.createElement("div");
+
+          text.className = "task-text";
+          text.textContent = task.text;
+
+
+          const deleteButton =
+            document.createElement("button");
+
+          deleteButton.className =
+            "delete-task";
+
+          deleteButton.textContent = "✕";
+
+          deleteButton.onclick =
+            function () {
+
+              tasks.splice(index, 1);
+
+              saveTasks();
+              renderTasks();
+
+            };
+
+
+          item.appendChild(checkbox);
+          item.appendChild(text);
+          item.appendChild(deleteButton);
+
+          tasksList.appendChild(item);
+
+        }
+      );
+
+    }
+
+
+    function addTask() {
+
+      const input =
+        document.getElementById("taskInput");
+
+      const taskText =
+        input.value.trim();
+
+
+      if (taskText === "") {
+        return;
+      }
+
+
+      tasks.push({
+        text: taskText,
+        done: false
+      });
+
+
+      saveTasks();
+      renderTasks();
+
+      input.value = "";
+
+      input.focus();
+
+    }
+
+
+    document
+      .getElementById("taskInput")
+      .addEventListener(
+        "keydown",
+        function (event) {
+
+          if (event.key === "Enter") {
+
+            addTask();
+
+          }
+
+        }
+      );
+
+
+    renderTasks();
 
   </script>
 
