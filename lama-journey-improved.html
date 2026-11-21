@@ -1,3 +1,9 @@
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -264,6 +270,313 @@
     }
 
   </style>
+  <!-- إضافة مستقلة: هوية الهلال الزرقاء + سماء الإنجازات -->
+  <style>
+    :root {
+      --hilal-blue: #0028f0;
+      --hilal-cobalt: #000a46;
+      --hilal-ink: #263766;
+      --hilal-light: #edf2ff;
+      --hilal-edge: #d8e1ff;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 50% 8%, #ffffff 0%, #e8efff 52%, #dce7ff 100%);
+      color: var(--hilal-ink);
+    }
+    .container {
+      border-color: var(--hilal-edge);
+      box-shadow: 0 16px 55px rgba(0, 25, 116, .11);
+    }
+    .heart, h1 { color: var(--hilal-cobalt); }
+    .subtitle { color: #6779aa; }
+    .study-box, .tasks-box {
+      background: #f4f7ff;
+      border-color: var(--hilal-edge);
+    }
+    .study-box h2, .tasks-box h2, #message { color: var(--hilal-cobalt); }
+    .check-button, .add-task-button {
+      background: var(--hilal-blue);
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(0, 40, 240, .17);
+    }
+    .check-button:hover, .add-task-button:hover { background: #001fd0; }
+    .streak { background: #eaf0ff; color: var(--hilal-cobalt); }
+    .task-input {
+      border-color: #cbd7ff;
+      color: var(--hilal-ink);
+    }
+    .task-input:focus { border-color: var(--hilal-blue); }
+    .task-input::placeholder { color: #8493b8; }
+    .task-item { border-color: #dfe6ff; }
+    .task-item input[type="checkbox"] { accent-color: var(--hilal-blue); }
+    .task-text { color: var(--hilal-ink); }
+    .footer, .reset { color: #7080a6; }
+    .small-heart, .reset:hover { color: var(--hilal-blue); }
+
+    /* سماء صغيرة مستقلة عن الوظائف الأصلية */
+    .sky-card {
+      margin-top: 21px;
+      padding: 18px;
+      text-align: right;
+      border-radius: 20px;
+      border: 1px solid #d5dfff;
+      background: #f7f9ff;
+    }
+    .sky-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .sky-header h2 {
+      margin: 0 0 5px;
+      color: var(--hilal-cobalt);
+      font-size: 20px;
+    }
+    .sky-caption { margin: 0; color: #6b7caa; font-size: 12px; line-height: 1.8; }
+    .sky-count {
+      flex-shrink: 0;
+      padding: 6px 9px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #0028d6;
+      background: #e3ebff;
+    }
+    .study-sky {
+      height: 218px;
+      overflow: hidden;
+      isolation: isolate;
+      position: relative;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .23);
+      background:
+        radial-gradient(circle at 16% 24%, rgba(255,255,255,.92) 1px, transparent 2px),
+        radial-gradient(circle at 76% 17%, rgba(255,255,255,.55) 1px, transparent 2px),
+        radial-gradient(circle at 39% 70%, rgba(185,213,255,.7) 1px, transparent 2px),
+        radial-gradient(circle at 58% 43%, rgba(255,255,255,.7) 1px, transparent 2px),
+        radial-gradient(ellipse at 50% 115%, #123faf 0%, #041b72 48%, #000a46 100%);
+      background-size: 97px 79px, 139px 103px, 127px 113px, 163px 131px, 100% 100%;
+      box-shadow: inset 0 0 32px rgba(0, 0, 0, .12);
+    }
+    .study-sky::after {
+      content: '';
+      position: absolute;
+      left: -10%; right: -10%; bottom: -57px;
+      height: 106px;
+      border-radius: 50%;
+      background: rgba(75, 123, 236, .13);
+      box-shadow: 0 -9px 65px rgba(66, 120, 255, .19);
+      pointer-events: none;
+    }
+    .sky-moon {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      box-shadow: -8px 5px 0 0 #cbdcff;
+      transform: rotate(-10deg);
+      opacity: .84;
+      filter: drop-shadow(0 0 8px rgba(210, 222, 255, .5));
+      pointer-events: none;
+    }
+    .sky-stars { position: absolute; inset: 0; z-index: 1; }
+    .sky-achievement-star {
+      position: absolute;
+      width: 39px;
+      height: 39px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #fff4bb;
+      font-size: 29px;
+      line-height: 39px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      text-shadow: 0 0 8px #fff8c5, 0 0 17px rgba(255,230,105,.8);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      animation: skyTwinkle 3s ease-in-out infinite;
+      touch-action: manipulation;
+    }
+    .sky-achievement-star:hover,
+    .sky-achievement-star:focus-visible,
+    .sky-achievement-star.is-selected {
+      color: #fff;
+      outline: 2px solid rgba(255,255,255,.83);
+      outline-offset: 1px;
+      background: rgba(255,255,255,.13);
+      animation: none;
+      filter: drop-shadow(0 0 6px #ffe78e);
+    }
+    @keyframes skyTwinkle {
+      0%, 100% { opacity: .82; filter: brightness(.94); }
+      50% { opacity: 1; filter: brightness(1.28); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sky-achievement-star { animation: none; }
+    }
+    .sky-empty {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 0 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #f0f4ff;
+      font-size: 15px;
+      line-height: 1.9;
+      text-shadow: 0 1px 6px #000a46;
+    }
+    .sky-pages,
+    .sky-navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 11px;
+    }
+    .sky-pages span { color: #5b6c99; font-size: 13px; }
+    .sky-small-button,
+    .sky-save-button {
+      border: 1px solid #ccd7ff;
+      border-radius: 10px;
+      background: white;
+      color: var(--hilal-cobalt);
+      font-size: 13px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .sky-small-button:hover:not(:disabled) { background: #eaf0ff; }
+    .sky-small-button:disabled { opacity: .38; cursor: default; }
+    .sky-star-editor {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #dce4ff;
+      background: #fff;
+      border-radius: 13px;
+    }
+    .sky-star-editor[hidden], .sky-empty[hidden] { display: none; }
+    .sky-editor-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+      color: #283f8f;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .sky-editor-heading time { font-weight: normal; color: #7280a5; }
+    .sky-name-row { display: flex; gap: 8px; }
+    .sky-name-row input {
+      min-width: 0;
+      width: 100%;
+      flex: 1;
+      border: 1px solid #cbd7ff;
+      border-radius: 10px;
+      padding: 11px;
+      outline: 0;
+      color: var(--hilal-cobalt);
+      background: #fff;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .sky-name-row input:focus { border-color: var(--hilal-blue); }
+    .sky-save-button {
+      flex-shrink: 0;
+      background: var(--hilal-blue);
+      color: white;
+      border-color: var(--hilal-blue);
+    }
+    .sky-save-button:hover { background: #001fd0; }
+    .sky-save-status {
+      min-height: 19px;
+      margin: 7px 0 0;
+      color: #2a559d;
+      font-size: 12px;
+    }
+    .sky-navigation { justify-content: space-between; gap: 8px; margin-top: 5px; }
+    .sky-tip { margin: 12px 2px 0; color: #7a86a8; font-size: 12px; line-height: 1.7; }
+    @media (max-width: 420px) {
+      .sky-card { padding: 12px; }
+      .sky-header h2 { font-size: 18px; }
+      .study-sky { height: 200px; }
+      .sky-name-row { flex-wrap: wrap; }
+      .sky-save-button { width: 100%; }
+      .sky-navigation .sky-small-button { font-size: 12px; padding: 8px; }
+    }
+  </style>
+
+  <!-- إضافة مستقلة: تسجيل مذاكرة الأمس إذا نُسي الضغط على زر اليوم -->
+  <style>
+    .lm-yesterday-box {
+      margin-top: 14px;
+      padding: 16px 17px;
+      border: 1px solid #cfdbff;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f5f8ff, #e9f0ff);
+      text-align: right;
+    }
+    .lm-yesterday-title {
+      margin: 0 0 5px;
+      color: #000a46;
+      font-size: 17px;
+    }
+    .lm-yesterday-hint { margin: 0 0 13px; color: #5b6f9a; font-size: 12px; line-height: 1.8; }
+    .lm-yesterday-action {
+      width: 100%;
+      background: #0028f0;
+      color: white;
+      border: 0;
+      padding: 12px 14px;
+      border-radius: 13px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: inherit;
+    }
+    .lm-yesterday-action:hover:not(:disabled) { background: #001fc7; }
+    .lm-yesterday-action:disabled { background: #dce6ff; color: #405d96; cursor: default; }
+    .lm-yesterday-status { margin: 10px 0 0; min-height: 1.3em; color: #234a9f; font-size: 13px; line-height: 1.7; }
+  </style>
+
+
+  <!-- إضافة مستقلة: معرض صور لمى (لا تغيّر أي CSS سابق) -->
+  <style>
+    .lm-gallery { margin-top: 22px; padding: 20px 17px 17px; border: 1px solid #cddaff; border-radius: 22px; background: linear-gradient(150deg,#f9fbff,#edf3ff); text-align: right; box-shadow: 0 8px 28px rgba(0,40,240,.05); }
+    .lm-gallery h2 { color: #000a46; font-size: 21px; margin: 0 0 14px; }
+    .lm-gallery [hidden], .lm-lightbox [hidden] { display:none !important; }
+    .lm-gallery-stage { position:relative; overflow:hidden; border-radius:17px; background:linear-gradient(135deg,#06184f,#173eac); box-shadow:0 10px 26px rgba(0,10,70,.18); }
+    .lm-gallery-picture { display:block; width:100%; height: min(65vw, 340px); min-height:220px; object-fit: contain; background: #07133d; cursor:zoom-in; }
+    .lm-gallery-nav { position:absolute; z-index:2; top:50%; transform:translateY(-50%); display:grid; place-items:center; width:39px; height:46px; padding:0; border:1px solid #ffffff80; background:#000a46ad; border-radius:14px; color:#fff; font: bold 26px Arial,sans-serif; cursor:pointer; }
+    .lm-gallery-nav:hover:not(:disabled) { background:#0028f0df; }
+    .lm-gallery-nav:disabled { opacity:.2; cursor:default; }
+    .lm-gallery-prev { right:9px; }
+    .lm-gallery-next { left:9px; }
+    .lm-gallery-nav:focus-visible, .lm-gallery-picture:focus-visible, .lm-lightbox button:focus-visible { outline:3px solid #a8bfff; outline-offset:2px; }
+    .lm-lightbox { width:min(92vw,950px); max-width:950px; max-height:96dvh; padding:12px; border:1px solid #7188e1; border-radius:19px; background:#050e32; color:#fff; box-shadow:0 24px 90px #0009; }
+    .lm-lightbox::backdrop { background:rgba(0,5,27,.85); }
+    .lm-lightbox-top { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 3px 8px; }
+    .lm-lightbox-close { border:1px solid #a1b4ef; background:#132b68; color:#fff; border-radius:12px; padding:8px 12px; cursor:pointer; font:inherit; }
+    .lm-lightbox-img { display:block; margin:auto; max-width:100%; max-height:calc(96dvh - 90px); width:auto; height:auto; object-fit:contain; border-radius:10px; }
+    .lm-lightbox-frame { position:relative; min-height:150px; display:flex; justify-content:center; align-items:center; }
+    .lm-lightbox-frame .lm-gallery-nav { position:fixed; top:50%; }
+    .lm-lightbox-frame .lm-gallery-prev { right: max(5vw, 14px); }
+    .lm-lightbox-frame .lm-gallery-next { left: max(5vw, 14px); }
+    .lm-lightbox button:disabled { display:none; }
+    @media (max-width:420px) { .lm-gallery { padding:15px 12px; } .lm-gallery-picture { min-height:190px; height:57vw; } .lm-gallery-nav { width:32px; height:40px; font-size:23px; } }
+  </style>
+
 </head>
 
 <body>
@@ -303,7 +616,7 @@
 
     <div class="tasks-box">
 
-      <h2>مهامك اليوم يا لمى 📝🤍</h2>
+      <h2>📝 مهام الإمبراطورة 👑</h2>
 
       <div class="task-input-area">
 
@@ -330,6 +643,65 @@
 
     </div>
 
+    <!-- إضافة مستقلة: سماء الإنجازات — نجمة واحدة عن كل يوم مذاكرة -->
+    <section class="sky-card" id="studySkySection" aria-labelledby="studySkyTitle">
+      <div class="sky-header">
+        <div>
+          <h2 id="studySkyTitle">🌌 سماء الإمبراطورة 👑</h2>
+          <p class="sky-caption">كل يوم تذاكرينه يصير نجمة في سماك ✨</p>
+        </div>
+        <span class="sky-count" id="skyStarCount">عدد النجوم: 0</span>
+      </div>
+
+      <div class="study-sky" id="studySky" aria-label="سماء نجوم المذاكرة">
+        <span class="sky-moon" aria-hidden="true"></span>
+        <div class="sky-stars" id="skyStars"></div>
+        <p class="sky-empty" id="skyEmpty">أول ما تضغطين «ذاكرت اليوم»، بتضيء أول نجمة في سماك ⭐</p>
+      </div>
+
+      <nav class="sky-pages" aria-label="تصفح صفحات السماء">
+        <button class="sky-small-button" id="skyPreviousPage" type="button">السابق</button>
+        <span id="skyPageLabel">الصفحة 1 من 1</span>
+        <button class="sky-small-button" id="skyNextPage" type="button">التالي</button>
+      </nav>
+
+      <div class="sky-star-editor" id="skyStarEditor" hidden>
+        <div class="sky-editor-heading">
+          <span id="skySelectedHeading">⭐ نجمة الإنجاز</span>
+          <time id="skySelectedDate"></time>
+        </div>
+        <div class="sky-name-row">
+          <input id="skyStarName" type="text" maxlength="40" aria-label="اسم النجمة" placeholder="سمّي نجمتك باسم حلو..." autocomplete="off">
+          <button class="sky-save-button" id="skySaveName" type="button">حفظ الاسم</button>
+        </div>
+        <p class="sky-save-status" id="skySaveStatus" role="status"></p>
+        <div class="sky-navigation">
+          <button class="sky-small-button" id="skyPreviousStar" type="button">النجمة الأقدم</button>
+          <button class="sky-small-button" id="skyNextStar" type="button">النجمة الأحدث</button>
+        </div>
+      </div>
+      <p class="sky-tip">اضغطي على أي نجمة لتسميتها وتشاهدي تاريخها، وتصفحي باقي النجوم من الأزرار 💙</p>
+    </section>
+
+    <!-- ألبوم الإمبراطورة: صور فقط، بلا أوصاف أو عبارات -->
+    <section class="lm-gallery" id="lmGallery" aria-labelledby="lmGalleryHeading">
+      <h2 id="lmGalleryHeading">ألبوم الإمبراطورة</h2>
+      <div id="lmGalleryContent" hidden>
+        <div class="lm-gallery-stage" id="lmGallerySwipeArea">
+          <button class="lm-gallery-nav lm-gallery-prev" id="lmPhotoPrevious" type="button" aria-label="الصورة السابقة">›</button>
+          <img class="lm-gallery-picture" id="lmGalleryPicture" alt="صورة تحفيزية" loading="lazy" decoding="async" tabindex="0" title="اضغطي لتكبير الصورة">
+          <button class="lm-gallery-nav lm-gallery-next" id="lmPhotoNext" type="button" aria-label="الصورة التالية">‹</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- إضافة مستقلة: تعويض تسجيل مذاكرة أمس فقط (مرة واحدة لكل تاريخ) -->
+    <section id="lmYesterdayBox" class="lm-yesterday-box" aria-labelledby="lmYesterdayTitle">
+      <h2 id="lmYesterdayTitle" class="lm-yesterday-title">📅 نسيتي تسجّلين مذاكرة أمس؟</h2>
+      <p class="lm-yesterday-hint">إذا ذاكرتِ أمس ونسيتي تضغطين الزر، سجّلي يوم أمس فقط. <span id="lmYesterdayDate"></span></p>
+      <button type="button" class="lm-yesterday-action" id="lmAddYesterday">⭐ احسبي مذاكرة أمس (+ يوم)</button>
+      <p class="lm-yesterday-status" id="lmYesterdayStatus" role="status" aria-live="polite"></p>
+    </section>
 
     <div class="footer">
       صنع بحب من عبدالله إلى لمى
@@ -666,5 +1038,428 @@
 
   </script>
 
+  <!-- إضافة مستقلة: تسجيل أيام المذاكرة كنجوم قابلة للتسمية والتصفح -->
+  <script>
+    (function () {
+      'use strict';
+
+      const SKY_STORAGE_KEY = 'lamaStudySkyStarsV1';
+      const STARS_PER_PAGE = 18;
+      const starPositions = [
+        [20, 23], [65, 55], [45, 17], [83, 30], [29, 72], [53, 82],
+        [11, 52], [77, 77], [42, 51], [57, 31], [88, 56], [13, 83],
+        [71, 13], [34, 32], [47, 70], [86, 87], [11, 16], [63, 74]
+      ];
+      const $ = (id) => document.getElementById(id);
+      const validDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || '');
+
+      function readStars() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(SKY_STORAGE_KEY) || '[]');
+          if (!Array.isArray(saved)) return [];
+          const usedDates = new Set();
+          return saved.filter((entry) => {
+            if (!entry || !validDate(entry.date) || usedDates.has(entry.date)) return false;
+            usedDates.add(entry.date);
+            return true;
+          }).map((entry) => ({
+            date: entry.date,
+            name: typeof entry.name === 'string' ? entry.name.slice(0, 40) : ''
+          })).sort((a, b) => a.date.localeCompare(b.date));
+        } catch (error) {
+          return [];
+        }
+      }
+
+      let achievementStars = readStars();
+      let selectedDate = null;
+      let skyPage = 0;
+      let dateBeforeStudyClick = null;
+
+      function saveStars() {
+        localStorage.setItem(SKY_STORAGE_KEY, JSON.stringify(achievementStars));
+      }
+
+      // لدى النسخة الأصلية تاريخ آخر يوم فقط. نحفظه إن كان موجوداً، دون اختلاق تواريخ أقدم.
+      const knownLastDate = localStorage.getItem('lamaLastStudyDate');
+      const knownDays = Number(localStorage.getItem('lamaStudyDays')) || 0;
+      if (knownDays > 0 && validDate(knownLastDate) &&
+          !achievementStars.some((entry) => entry.date === knownLastDate)) {
+        achievementStars.push({ date: knownLastDate, name: 'نجمة يوم المذاكرة' });
+        achievementStars.sort((a, b) => a.date.localeCompare(b.date));
+        saveStars();
+      }
+
+      function formatDate(isoDate) {
+        const date = new Date(isoDate + 'T12:00:00');
+        return new Intl.DateTimeFormat('ar-SA-u-ca-gregory', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        }).format(date);
+      }
+
+      function renderSky() {
+        const layer = $('skyStars');
+        layer.replaceChildren();
+        $('skyStarCount').textContent = 'عدد النجوم: ' + achievementStars.length;
+        $('skyEmpty').hidden = achievementStars.length !== 0;
+
+        const totalPages = Math.max(1, Math.ceil(achievementStars.length / STARS_PER_PAGE));
+        skyPage = Math.min(Math.max(skyPage, 0), totalPages - 1);
+        $('skyPageLabel').textContent = 'الصفحة ' + (skyPage + 1) + ' من ' + totalPages;
+        $('skyPreviousPage').disabled = skyPage === 0;
+        $('skyNextPage').disabled = skyPage === totalPages - 1;
+
+        achievementStars.slice(skyPage * STARS_PER_PAGE, (skyPage + 1) * STARS_PER_PAGE)
+          .forEach((entry, indexInPage) => {
+            const [x, y] = starPositions[indexInPage];
+            const star = document.createElement('button');
+            star.type = 'button';
+            star.className = 'sky-achievement-star' + (entry.date === selectedDate ? ' is-selected' : '');
+            star.style.left = x + '%';
+            star.style.top = y + '%';
+            star.style.animationDelay = ((indexInPage % 7) * -.37) + 's';
+            star.textContent = '★';
+            star.title = (entry.name || 'نجمة المذاكرة') + ' — ' + formatDate(entry.date);
+            star.setAttribute('aria-label', star.title);
+            star.setAttribute('aria-pressed', entry.date === selectedDate ? 'true' : 'false');
+            star.addEventListener('click', () => selectStar(entry.date));
+            layer.appendChild(star);
+          });
+
+        const selectedIndex = achievementStars.findIndex((star) => star.date === selectedDate);
+        const hasSelection = selectedIndex !== -1;
+        $('skyStarEditor').hidden = !hasSelection;
+        if (hasSelection) {
+          const entry = achievementStars[selectedIndex];
+          $('skySelectedHeading').textContent = '⭐ ' + (entry.name || 'نجمة الإنجاز');
+          $('skySelectedDate').textContent = formatDate(entry.date);
+          $('skySelectedDate').dateTime = entry.date;
+          $('skyStarName').value = entry.name;
+          $('skyPreviousStar').disabled = selectedIndex === 0;
+          $('skyNextStar').disabled = selectedIndex === achievementStars.length - 1;
+        }
+      }
+
+      function selectStar(date) {
+        const index = achievementStars.findIndex((entry) => entry.date === date);
+        if (index === -1) return;
+        selectedDate = date;
+        skyPage = Math.floor(index / STARS_PER_PAGE);
+        $('skySaveStatus').textContent = '';
+        renderSky();
+      }
+
+      function addStarForDay(date) {
+        if (!validDate(date)) return;
+        if (!achievementStars.some((entry) => entry.date === date)) {
+          achievementStars.push({ date, name: 'نجمة ' + (achievementStars.length + 1) });
+          achievementStars.sort((a, b) => a.date.localeCompare(b.date));
+          saveStars();
+        }
+        selectStar(date);
+      }
+
+      // الاستماع للزر الموجود أصلاً، من غير تعديل finishedStudy أو النجوم المتساقطة.
+      const studyButton = document.querySelector('.check-button');
+      studyButton.addEventListener('click', () => {
+        dateBeforeStudyClick = localStorage.getItem('lamaLastStudyDate');
+      }, true);
+      studyButton.addEventListener('click', () => {
+        const dateAfterStudyClick = localStorage.getItem('lamaLastStudyDate');
+        if (dateAfterStudyClick === getToday() && dateBeforeStudyClick !== dateAfterStudyClick) {
+          addStarForDay(dateAfterStudyClick);
+        }
+      });
+
+      $('skyPreviousPage').addEventListener('click', () => {
+        if (skyPage > 0) { skyPage--; renderSky(); }
+      });
+      $('skyNextPage').addEventListener('click', () => {
+        if ((skyPage + 1) * STARS_PER_PAGE < achievementStars.length) {
+          skyPage++;
+          renderSky();
+        }
+      });
+
+      function moveSelection(offset) {
+        const index = achievementStars.findIndex((entry) => entry.date === selectedDate);
+        const next = achievementStars[index + offset];
+        if (next) selectStar(next.date);
+      }
+      $('skyPreviousStar').addEventListener('click', () => moveSelection(-1));
+      $('skyNextStar').addEventListener('click', () => moveSelection(1));
+
+      function saveStarName() {
+        const entry = achievementStars.find((star) => star.date === selectedDate);
+        if (!entry) return;
+        const name = $('skyStarName').value.trim();
+        if (!name) {
+          $('skySaveStatus').textContent = 'اكتبي اسماً للنجمة أولاً ⭐';
+          $('skyStarName').focus();
+          return;
+        }
+        entry.name = name.slice(0, 40);
+        saveStars();
+        renderSky();
+        $('skySaveStatus').textContent = 'انحفظ اسم النجمة 💙';
+      }
+      $('skySaveName').addEventListener('click', saveStarName);
+      $('skyStarName').addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') saveStarName();
+      });
+
+      // إضافة جديدة مستقلة داخل وحدة السماء، لتستفيد من نفس سجل النجوم.
+      // لا نغيّر تاريخ آخر تسجيل لليوم؛ بالتالي زر "ذاكرت اليوم" يبقى كما هو.
+      function getYesterdayDate() {
+        const date = new Date();
+        date.setHours(12, 0, 0, 0);
+        date.setDate(date.getDate() - 1);
+        return date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0');
+      }
+      const yesterdayButton = $('lmAddYesterday');
+      const yesterdayStatus = $('lmYesterdayStatus');
+      function yesterdayWasRecorded(date) {
+        return achievementStars.some((entry) => entry.date === date) ||
+          localStorage.getItem('lamaLastStudyDate') === date;
+      }
+      function refreshYesterdayButton() {
+        const date = getYesterdayDate();
+        $('lmYesterdayDate').textContent = 'تاريخ أمس: ' + formatDate(date);
+        const recorded = yesterdayWasRecorded(date);
+        yesterdayButton.disabled = recorded;
+        yesterdayButton.textContent = recorded ? '✓ مذاكرة أمس مسجّلة بالفعل' : '⭐ احسبي مذاكرة أمس (+ يوم)';
+      }
+      yesterdayButton.addEventListener('click', () => {
+        const yesterday = getYesterdayDate();
+        if (yesterdayWasRecorded(yesterday)) {
+          yesterdayStatus.textContent = 'هذا اليوم مسجّل من قبل، ما نقدر نحسبه مرتين 💙';
+          refreshYesterdayButton();
+          return;
+        }
+        try {
+          // أضِف النجمة أولاً؛ إن تعذّر حفظها لا نزيد العدّاد.
+          addStarForDay(yesterday);
+          days = (Number(localStorage.getItem('lamaStudyDays')) || 0) + 1;
+          localStorage.setItem('lamaStudyDays', String(days));
+          $('days').textContent = days;
+          yesterdayStatus.textContent = 'انحسب أمس يوم واحد، وانضافت نجمته للسماء! ⭐💙';
+          $('message').textContent = 'حلو إنك تذكّرتِ تسجّلين إنجاز أمس 💙';
+          refreshYesterdayButton();
+        } catch (error) {
+          yesterdayStatus.textContent = 'تعذّر حفظ تسجيل أمس. تأكدي من السماح بحفظ بيانات الموقع.';
+        }
+      });
+      // يظهر التحديث أيضًا عند الضغط على زر مذاكرة اليوم.
+      studyButton.addEventListener('click', refreshYesterdayButton);
+      // حدّث تاريخ أمس إذا ظل الموقع مفتوحاً بعد منتصف الليل.
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) refreshYesterdayButton();
+      });
+      refreshYesterdayButton();
+
+      if (achievementStars.length > 0) {
+        selectedDate = achievementStars[achievementStars.length - 1].date;
+        skyPage = Math.floor((achievementStars.length - 1) / STARS_PER_PAGE);
+      }
+      renderSky();
+    })();
+  </script>
+
+  <!-- إضافة مستقلة: عرض اسم النجمة وتاريخها داخل السماء عند الضغط عليها -->
+  <style>
+    .study-sky .sky-name-popup {
+      position: absolute;
+      z-index: 5;
+      max-width: min(240px, calc(100% - 24px));
+      min-width: 145px;
+      padding: 10px 15px;
+      border: 1px solid rgba(217, 232, 255, .55);
+      border-radius: 14px;
+      background: rgba(0, 10, 70, .94);
+      color: #fff;
+      box-shadow: 0 9px 24px rgba(0, 0, 25, .4);
+      text-align: center;
+      pointer-events: none;
+      transform: translate(-50%, -100%);
+      animation: skyNameAppear .19s ease-out both;
+    }
+    .study-sky .sky-name-popup[hidden] { display: none; }
+    .sky-name-popup-title { display: block; font-weight: 700; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; }
+    .sky-name-popup-date { display: block; margin-top: 3px; color: #cbdcff; font-size: 12px; line-height: 1.5; }
+    @keyframes skyNameAppear {
+      from { opacity: 0; translate: 0 5px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .study-sky .sky-name-popup { animation: none; }
+    }
+  </style>
+  <script>
+    // لا يغير أي دالة موجودة: يستمع للنقرات ويعرض بيانات النجمة المحفوظة.
+    (function () {
+      'use strict';
+      const sky = document.getElementById('studySky');
+      const layer = document.getElementById('skyStars');
+      if (!sky || !layer) return;
+
+      const popup = document.createElement('div');
+      popup.className = 'sky-name-popup';
+      popup.hidden = true;
+      popup.setAttribute('role', 'status');
+      popup.setAttribute('aria-live', 'polite');
+      const title = document.createElement('span');
+      title.className = 'sky-name-popup-title';
+      const date = document.createElement('span');
+      date.className = 'sky-name-popup-date';
+      popup.append(title, date);
+      sky.appendChild(popup);
+
+      function showStar(star) {
+        if (!star) { popup.hidden = true; return; }
+        const details = (star.title || star.getAttribute('aria-label') || '').split(' — ');
+        title.textContent = '⭐ ' + (details[0] || 'نجمة الإنجاز');
+        date.textContent = details.slice(1).join(' — ');
+        const skyRect = sky.getBoundingClientRect();
+        const starRect = star.getBoundingClientRect();
+        const x = starRect.left + starRect.width / 2 - skyRect.left;
+        const y = starRect.top + starRect.height / 2 - skyRect.top;
+        popup.hidden = false;
+        const width = popup.getBoundingClientRect().width;
+        const margin = 8;
+        const left = Math.min(Math.max(x, width / 2 + margin), skyRect.width - width / 2 - margin);
+        popup.style.left = left + 'px';
+        if (y > popup.offsetHeight + 20) {
+          popup.style.top = (y - 13) + 'px';
+          popup.style.transform = 'translate(-50%, -100%)';
+        } else {
+          popup.style.top = (y + 13) + 'px';
+          popup.style.transform = 'translate(-50%, 0)';
+        }
+      }
+
+      // تفويض النقرات حتى يظل يعمل بعد إعادة رسم النجوم.
+      layer.addEventListener('click', function (event) {
+        const star = event.target.closest('.sky-achievement-star');
+        if (star && layer.contains(star)) showStar(star);
+      }, true);
+
+      // تحديث الفقاعة عند تغيير اسم النجمة أو التصفح بالأزرار.
+      ['skySaveName', 'skyPreviousStar', 'skyNextStar'].forEach(function (id) {
+        const button = document.getElementById(id);
+        if (!button) return;
+        button.addEventListener('click', function () {
+          requestAnimationFrame(function () {
+            showStar(layer.querySelector('.sky-achievement-star.is-selected'));
+          });
+        });
+      });
+      ['skyPreviousPage', 'skyNextPage'].forEach(function (id) {
+        const button = document.getElementById(id);
+        if (button) button.addEventListener('click', function () { popup.hidden = true; });
+      });
+    })();
+  </script>
+
+  <!-- تكبير الصورة بالضغط عليها -->
+  <dialog class="lm-lightbox" id="lmGalleryDialog" aria-label="عرض الصورة بحجم كبير">
+    <div class="lm-lightbox-top"><button type="button" class="lm-lightbox-close" id="lmLightboxClose">إغلاق ✕</button></div>
+    <div class="lm-lightbox-frame" id="lmLightboxSwipeArea">
+      <button class="lm-gallery-nav lm-gallery-prev" id="lmLightboxPrevious" type="button" aria-label="الصورة السابقة">›</button>
+      <img class="lm-lightbox-img" id="lmLightboxImage" alt="صورة تحفيزية مكبرة">
+      <button class="lm-gallery-nav lm-gallery-next" id="lmLightboxNext" type="button" aria-label="الصورة التالية">‹</button>
+    </div>
+  </dialog>
+
+  <!-- أضف أسماء ملفات الصور فقط هنا: لا تحتاج كتابة أي كلام معها -->
+  <script>
+    const LAMA_GALLERY_PHOTOS = [
+      "images/1.jpg",
+      "images/2.jpg",
+      "images/3.jpg",
+      "images/4.jpg",
+      "images/5.jpg",
+      "images/6.jpg",
+      "images/7.jpg",
+      "images/8.jpg",
+      "images/9.jpg",
+      "images/10.jpg",
+      "images/11.jpg",
+      "images/12.jpg",
+    ];
+  </script>
+  <script>
+    (function () {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const photos = LAMA_GALLERY_PHOTOS.filter(src => typeof src === 'string' && src.trim());
+      const dialog = $('lmGalleryDialog');
+      const stage = $('lmGallerySwipeArea');
+      const modalStage = $('lmLightboxSwipeArea');
+      let current = 0;
+      if (!photos.length) return;
+      $('lmGalleryContent').hidden = false;
+
+      function render() {
+        const src = photos[current];
+        $('lmGalleryPicture').src = src;
+        $('lmGalleryPicture').alt = 'صورة تحفيزية ' + (current + 1);
+        $('lmPhotoPrevious').hidden = photos.length === 1;
+        $('lmPhotoNext').hidden = photos.length === 1;
+        if (dialog.open) {
+          $('lmLightboxImage').src = src;
+          $('lmLightboxImage').alt = $('lmGalleryPicture').alt;
+          $('lmLightboxPrevious').hidden = photos.length === 1;
+          $('lmLightboxNext').hidden = photos.length === 1;
+        }
+      }
+      function navigate(offset) {
+        if (photos.length <= 1) return;
+        current = (current + offset + photos.length) % photos.length;
+        render();
+      }
+      $('lmPhotoPrevious').addEventListener('click', () => navigate(-1));
+      $('lmPhotoNext').addEventListener('click', () => navigate(1));
+      $('lmLightboxPrevious').addEventListener('click', () => navigate(-1));
+      $('lmLightboxNext').addEventListener('click', () => navigate(1));
+
+      function openLightbox() {
+        if (typeof dialog.showModal === 'function') dialog.showModal();
+        else dialog.setAttribute('open','');
+        render();
+        $('lmLightboxClose').focus();
+      }
+      $('lmGalleryPicture').addEventListener('click', openLightbox);
+      $('lmGalleryPicture').addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }
+      });
+      $('lmLightboxClose').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') { if (dialog.open) navigate(-1); }
+        else if (e.key === 'ArrowLeft') { if (dialog.open) navigate(1); }
+      });
+      function enableSwipe(element) {
+        let startX = null;
+        element.addEventListener('touchstart', e => {
+          if (e.touches.length === 1) startX = e.touches[0].clientX;
+        }, { passive:true });
+        element.addEventListener('touchend', e => {
+          if (startX == null || !e.changedTouches.length) return;
+          const deltaX = e.changedTouches[0].clientX - startX;
+          startX = null;
+          if (Math.abs(deltaX) > 45) navigate(deltaX > 0 ? -1 : 1);
+        }, { passive:true });
+      }
+      enableSwipe(stage);
+      enableSwipe(modalStage);
+      render();
+    })();
+  </script>
 </body>
 </html>
+
+
+
+
